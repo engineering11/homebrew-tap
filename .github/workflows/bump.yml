@@ -1,0 +1,27 @@
+# Bumps Casks/e11-foundry.rb to the latest Foundry Desktop release.
+name: bump
+on:
+  schedule: [{ cron: '17 * * * *' }]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  e11-foundry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release view -R engineering11/e11-foundry-release --json tagName -q .tagName)
+          version=${tag#v}
+          cask=Casks/e11-foundry.rb
+          grep -q "version \"$version\"" "$cask" && exit 0
+          dmg="Foundry_${version}_aarch64.dmg"
+          gh release download "$tag" -R engineering11/e11-foundry-release -p "$dmg"
+          sha=$(sha256sum "$dmg" | cut -d' ' -f1)
+          sed -i -E "s/version \"[^\"]+\"/version \"$version\"/; s/sha256 \"[^\"]+\"/sha256 \"$sha\"/" "$cask"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -am "e11-foundry $version"
+          git push

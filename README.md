@@ -6,5 +6,5 @@ brew install --cask engineering11/tap/e11-foundry
 
 Foundry Desktop updates itself, so `brew upgrade` skips it unless you pass `--greedy`.
 
-On each Foundry Desktop release, bump `version` and `sha256` in `Casks/e11-foundry.rb`
-to the new DMG on engineering11/e11-foundry-release.
+`.github/workflows/bump.yml` checks engineering11/e11-foundry-release hourly and bumps
+`Casks/e11-foundry.rb` to the latest release. Run it from the Actions tab to bump sooner.
