@@ -1,6 +1,6 @@
 cask "e11-foundry" do
-  version "0.16.1"
-  sha256 "3c080b77ffd9524d65ddfe86057ee2204631bf93598de9738cf3be9b22e5c761"
+  version "0.16.2"
+  sha256 "050a90f199945bc0385d26a0b2cfd1d5112ee0751942bc02dd4e7c9b3e7bf65f"
 
   url "https://github.com/engineering11/e11-foundry-release/releases/download/v#{version}/Foundry_#{version}_aarch64.dmg"
   name "Foundry"
